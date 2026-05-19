@@ -1,0 +1,12 @@
+{
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "src/pages/**/*.{ts,tsx}",
+    "src/components/**/*.{ts,tsx}"
+  ],
+  "ignore": [
+    "src/components/ui/**",
+    "src/components/data-table/**",
+    "public/icons/**"
+  ]
+}
