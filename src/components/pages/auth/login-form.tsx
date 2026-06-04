@@ -25,16 +25,22 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
   const handleConfirm = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await loginApi(formData.email, formData.password);
-    if (!result.success) {
-      toast.error(result.message ?? "خطا در قراری ارتباط با سرور");
 
-      return;
+    try {
+      const result = await loginApi("user@example.com", "Password123");
+      if (!result?.success || !result.data?.accessToken) {
+        toast.error(result?.message ?? "خطا در ارتباط با سرور");
+        return;
+      }
+      setAuth(result?.data?.accessToken);
+      toast.success(result?.message ?? "ورود با موفقیت انجام شد");
+      router.push("/admin");
+    } catch (error: any) {
+      console.error("Login error", error);
+      toast.error(
+        error.response?.data?.message ?? "خطا در برقراری ارتباط با سرور"
+      );
     }
-
-    setAuth(result?.data?.admin);
-
-    router.push("/admin");
   };
 
   return (

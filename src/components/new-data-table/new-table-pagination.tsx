@@ -14,28 +14,28 @@ import { useLangStore } from "@/store/useLangStore";
 import translations from "@/lib/i18n";
 export interface SimplePaginationProps {
   page: number;
-  perPage: number;
+  limit: number;
   total: number;
   onChangePage: (page: number) => void;
-  onChangePerPage: (perPage: number) => void;
+  onChangeLimit: (limit: number) => void;
 }
 
 export default function NewTablePagination({
   page,
-  perPage,
+  limit,
   total,
   onChangePage,
-  onChangePerPage,
+  onChangeLimit,
 }: SimplePaginationProps) {
-  const totalPages = Math.max(1, Math.ceil(total / perPage));
+  const totalPages = Math.max(1, Math.ceil(total / limit));
   const { lang } = useLangStore();
   const t = translations[lang as "fa" | "en"];
 
   return (
-    <div className="flex items-center justify-between lg:px-4">
+    <div className="flex items-center justify-between ">
       <div className="flex w-full items-center gap-4 lg:w-fit">
         <div className="items-center gap-2 lg:flex">
-          <Select value={String(perPage)} onValueChange={(v) => onChangePerPage(Number(v))}>
+          <Select value={String(limit)} onValueChange={(v) => onChangeLimit(Number(v))}>
             <SelectTrigger size="sm" className="w-16" id="rows-per-page">
               <SelectValue />
             </SelectTrigger>
@@ -56,7 +56,7 @@ export default function NewTablePagination({
             size="icon"
             onClick={() => onChangePage(page - 1)}
           >
-            <ChevronLeftIcon />
+            <ChevronRightIcon />
           </Button>
 
           {totalPages > 15 ? (
@@ -96,7 +96,7 @@ export default function NewTablePagination({
             size="icon"
             onClick={() => onChangePage(page + 1)}
           >
-            <ChevronRightIcon />
+            <ChevronLeftIcon />
           </Button>
         </div>
       </div>

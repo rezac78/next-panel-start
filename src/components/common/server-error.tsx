@@ -20,13 +20,13 @@ export default function ServerError() {
         </div>
 
         <div className="space-y-1">
-          <p className="text-lg font-bold">{t.conneCtionproblem}</p>
-          <p className="text-muted-foreground text-md">{t.conneCtionproblemDesc}</p>
+          <p className="text-lg font-bold">{t.connectionProblem}</p>
+          <p className="text-muted-foreground text-md">{t.connectionProblemDesc}</p>
         </div>
 
         <Button variant="outline" size="lg" onClick={handleRetry} className="mt-2 gap-2">
           <RefreshCcw className="h-5 w-5" />
-          {t.Retry}
+          {t.retry}
         </Button>
       </div>
     </div>

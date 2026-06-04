@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getInitials = (str: string): string => {
-  if (!str.trim()) return "?";
+  if (!str?.trim()) return "?";
 
   return (
     str

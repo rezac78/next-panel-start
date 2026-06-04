@@ -100,7 +100,7 @@ export function MultiSelect({
       <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
         <Command>
           <CommandInput placeholder={`${t.Search}...`} />
-          <CommandEmpty>{t.NotFoundResults}</CommandEmpty>
+          <CommandEmpty>{t.NotFound}</CommandEmpty>
 
           <CommandGroup className="max-h-60 overflow-auto">
             {options.map((opt, i) => {

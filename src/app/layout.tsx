@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./jodit-custom.css";
-import "react-phone-input-2/lib/style.css";
+// import "react-phone-input-2/lib/style.css";
 import ThemeProvider from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 // import CheckToken from "@/lib/check-token";
@@ -30,7 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const lang = cookieStore.get("lang")?.value || "en";
+  const lang = cookieStore.get("lang")?.value || "fa";
   const dir = lang === "fa" ? "rtl" : "ltr";
 
   return (

@@ -18,7 +18,6 @@ import { ExtendedFieldConfig, FieldConfig } from "@/types/modals/modals";
 
 import { Switch } from "@/components/ui/switch";
 import TimeField from "@/components/common/TimeField";
-import PhoneInput from "react-phone-input-2";
 import { MultiSelect } from "../ui/multi-select";
 import Image from "next/image";
 import RichTextEditor from "../editor/rich-text-editor";
@@ -32,7 +31,7 @@ interface CreateEditModalProps {
   open: boolean;
   title: string;
   onClose: () => void;
-  onSave: (data: Record<string, any>) => void;
+  onSave: (data: Record<string, any>) => Promise<boolean>;
   fields: ExtendedFieldConfig[];
   defaultValues?: Record<string, any>;
   saveText?: string;
@@ -87,9 +86,10 @@ export default function CreateEditModal({
     [onFieldChange]
   );
 
-  const handleSubmit = () => {
-    onSave(formData);
-    onClose();
+  const handleSubmit = async () => {
+    if (!onSave) return;
+    const success = await onSave(formData); // boolean
+    if (success) onClose();
   };
   const imagePreview = useMemo(() => {
     const img = formData.image;
@@ -145,10 +145,10 @@ export default function CreateEditModal({
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
-        className={`w-full ${sizeMap[modalSize]} h-[calc(100vh-80px)] flex flex-col p-0`}
+        className={`w-full ${sizeMap[modalSize]} max-h-[calc(100vh-80px)] flex flex-col p-0 overflow-hidden`}
       >
         <div className="border-b px-6 py-4 shrink-0 bg-background/95 backdrop-blur rounded-4">
-          <DialogHeader>
+          <DialogHeader >
             <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
           </DialogHeader>
         </div>
@@ -173,7 +173,7 @@ export default function CreateEditModal({
             {`${t.loading}....`}
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
             {hasGroupedTimes && (
               <div className="space-y-4">
                 {Object.keys(groups).map((base) => {
@@ -291,7 +291,7 @@ export default function CreateEditModal({
                             alt="preview"
                           />
                         ) : (
-                          <div className="text-sm opacity-70">{t.profile.uploadAnImage}</div>
+                          <div className="text-sm opacity-70">{t.uploadAnImage}</div>
                         )}
                       </label>
                     ) : field.type === "repeater" ? (
@@ -415,7 +415,7 @@ export default function CreateEditModal({
                       />
                     ) : field.type === "phone" ? (
                       <div className="relative">
-                        <PhoneInput
+                        {/* <PhoneInput
                           country={"ae"}
                           value={formData[field.name] ?? ""}
                           onChange={(value) => {
@@ -431,7 +431,7 @@ export default function CreateEditModal({
                           containerClass="!w-full"
                           inputClass="!w-full !h-10 !text-sm !rounded-md !border !border-grey-300 !pl-12 focus:!border-grey-500 focus:!ring-grey-200 focus:!shadow-none disabled:!bg-gray-100 disabled:!opacity-50"
                           buttonClass="!absolute !left-0 !top-0 !h-10 !rounded-l-md !border !border-grey-300 !bg-grey-50"
-                        />
+                        /> */}
                       </div>
                     ) : (
                       <Input
@@ -459,13 +459,13 @@ export default function CreateEditModal({
               {switchFields.map((field, i) => (
                 <div key={i} className="flex items-center justify-between sm:col-span-2">
                   <Label className="text-sm font-medium opacity-70">{field.label}</Label>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3" dir="ltr">
                     <Switch
                       checked={formData[field.name] === "1"}
                       onCheckedChange={(checked) => handleChange(field.name, checked ? "1" : "0")}
                     />
                     <span className="text-sm font-medium opacity-50">
-                      {formData[field.name] === "1" ? "Active" : "Inactive"}
+                      {formData[field.name] === "1" ? t.Active : t.Inactive}
                     </span>
                   </div>
                 </div>

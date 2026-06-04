@@ -15,7 +15,7 @@ export async function loginApi(
   password: string
 ): Promise<ApiResponse<AdminLoginData>> {
   try {
-    const response = await axios.post(`${BASE_URL}admin/login`, {
+    const response = await axios.post(`${BASE_URL}auth/admin/login`, {
       email,
       password,
     });

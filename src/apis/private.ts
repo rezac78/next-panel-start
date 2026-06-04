@@ -5,14 +5,15 @@ import { NEXT_API_URL } from "@/config";
 export async function privateApiRequest<T>(
   url: string,
   config: {
-    method?: "GET" | "POST" | "PUT" | "DELETE";
+    method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
     headers?: HeadersInit;
     body?: BodyInit | null;
     cache?: RequestCache;
-  } = {}
+  } = {},
 ): Promise<T> {
   const { method = "GET", headers, body, cache } = config;
-  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+  const isFormData =
+    typeof FormData !== "undefined" && body instanceof FormData;
 
   const makeRequest = (accessToken: string | null) =>
     fetch(url, {
@@ -49,6 +50,6 @@ export async function privateApiRequest<T>(
   }
 
   res = await makeRequest(newAccessToken);
-  
+
   return (await res.json()) as T;
 }

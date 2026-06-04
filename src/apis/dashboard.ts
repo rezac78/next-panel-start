@@ -1,6 +1,4 @@
 "use server";
-import { AdminDashboardResponse } from "@/types/dashboard";
-import { DashboardProductsResponse } from "@/types/dashboard/dashboardProducts";
 // import { handleApiError } from '@/lib/handle-api-error';
 import { privateApiRequest } from "@/apis/private";
 import { BASE_URL } from "@/config";
@@ -32,7 +30,7 @@ export async function getDashboard(start?: string, end?: string) {
     // console.log(res)
     // console.log('**************')
 
-    return await privateApiRequest<AdminDashboardResponse>(url, {
+    return await privateApiRequest(url, {
       headers: {
         Accept: "application/json",
         ContentType: "application/json",
@@ -60,7 +58,7 @@ export async function getDashboardProduct(type: string, start: string) {
     //     headers: { Authorization: `Bearer ${Token}` },
     //   }
     // );
-    return await privateApiRequest<DashboardProductsResponse>(
+    return await privateApiRequest(
       `${BASE_URL}admin/dashboard/get-products?start=${start}&type=${type}`
     );
   } catch (err: any) {

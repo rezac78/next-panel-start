@@ -145,7 +145,7 @@ function SidebarProvider({
 }
 
 function Sidebar({
-  side = "left",
+  side = "right",
   variant = "inset",
   collapsible = "none",
   className,

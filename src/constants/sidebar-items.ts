@@ -1,5 +1,4 @@
-import { FolderKanban, Layers, PanelLeftIcon, SquarePlus, UserPen } from "lucide-react";
-import UserAdd2Icon from "@/public/icons/dashboard/customer/UserAdd2Icon";
+import { Layers, PanelLeftIcon } from "lucide-react";
 
 export type NavMainItem = {
   title: string;
@@ -18,48 +17,37 @@ export type NavGroup = {
   items: NavMainItem[];
 };
 
-export const sidebarItems1: NavGroup[] = [
+type SidebarTranslations = {
+  page: {
+    dashboard: string;
+    website: string;
+    menu: string;
+    subMenu: string;
+  };
+};
+
+export const getSidebarItems = (t: SidebarTranslations): NavGroup[] => [
   {
     id: 1,
-    label: "Dashboard",
+    label: t.page.dashboard,
     url: "/admin",
     icon: PanelLeftIcon,
     items: [],
   },
   {
     id: 2,
-    label: "Project",
-    url: "/admin/project",
-    icon: FolderKanban,
-    items: [],
+    label: t.page.website,
+    url: "/admin/webSite",
+    icon: Layers,
+    items: [
+      {
+        title: t.page.menu,
+        url: "/admin/webSite/menu",
+      },
+      {
+        title: t.page.subMenu,
+        url: "/admin/webSite/submenu",
+      },
+    ],
   },
-];
-export const sidebarItems: NavGroup[] = [
-  {
-    id: 1,
-    label: "Dashboard",
-    url: "/admin",
-    icon: PanelLeftIcon,
-    items: [],
-  },
-  {
-    id: 2,
-    label: "Project",
-    url: "/admin/project",
-    icon: FolderKanban,
-    items: [],
-  },
-  // {
-  //   id: 6,
-  //   label: "Blog",
-  //   url: "/admin/blog",
-  //   icon: Layers,
-  //   items: [
-  //     { title: "Blog", url: "/admin/blog" },
-  //     { title: "Tags", url: "/admin/blog/tags" },
-  //     { title: "Categories", url: "/admin/blog/categories" },
-  //     // { title: 'Reviews', url: '/admin/customers/reviews' },
-  //     // { title: 'GDPR Data Requests', url: '/admin/customers/gdpr' }
-  //   ],
-  // },
 ];

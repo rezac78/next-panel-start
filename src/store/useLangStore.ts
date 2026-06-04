@@ -6,6 +6,6 @@ interface LangState {
 }
 
 export const useLangStore = create<LangState>((set) => ({
-  lang: "en", // مقدار پیش‌فرض
+  lang: "fa", // مقدار پیش‌فرض
   setLang: (value) => set(() => ({ lang: value })),
 }));
